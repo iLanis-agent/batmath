@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BatMath - calculator</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #101511; color: #eff6ee; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+  main { max-width: 760px; padding: 32px 20px 48px; width: 100%; box-sizing: border-box; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  p.sub { color: #c8dcc6; margin: 0 0 20px; }
+  .card { background: #162017; border: 1px solid #2a4230; border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; }
+  .card h2 { margin: 0 0 12px; font-size: 1.05rem; color: #dcecd9; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 14px; }
+  label { display: block; color: #adc4a9; font-size: 0.82rem; margin-bottom: 4px; }
+  input { width: 100%; box-sizing: border-box; background: #101511; border: 1px solid #375540; color: #eff6ee; border-radius: 8px; padding: 9px 10px; font-size: 0.95rem; }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .presets button { background: #1d2b1f; color: #e3f0e0; border: 1px solid #375540; border-radius: 999px; padding: 7px 14px; font-size: 0.85rem; cursor: pointer; }
+  .presets button:hover { background: #2a4230; }
+  .out { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .metric { background: #101511; border: 1px solid #2a4230; border-radius: 10px; padding: 12px 14px; }
+  .metric .v { font-size: 1.3rem; font-weight: 700; color: #7ed98c; }
+  .metric .k { color: #adc4a9; font-size: 0.78rem; margin-top: 2px; }
+  .note { color: #8ea889; font-size: 0.82rem; line-height: 1.5; margin-top: 10px; }
+  a.back { color: #7ed98c; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>&#9918; BatMath</h1>
+  <p class="sub">Counting stats in; the real line out.</p>
+  <div class="presets">
+    <button data-p="mvp">MVP season</button>
+    <button data-p="average">League-average bat</button>
+    <button data-p="ace">Ace season</button>
+    <button data-p="rough">Rough year</button>
+  </div>
+  <div class="card">
+    <h2>1. The batting line</h2>
+    <div class="grid">
+      <div><label>At-bats</label><input id="ab" type="number" value="500" min="0"></div>
+      <div><label>Hits</label><input id="h" type="number" value="150" min="0"></div>
+      <div><label>Doubles</label><input id="d2" type="number" value="30" min="0"></div>
+      <div><label>Triples</label><input id="d3" type="number" value="5" min="0"></div>
+      <div><label>Home runs</label><input id="hr" type="number" value="25" min="0"></div>
+      <div><label>Walks</label><input id="bb" type="number" value="60" min="0"></div>
+      <div><label>Hit by pitch</label><input id="hbp" type="number" value="5" min="0"></div>
+      <div><label>Sac flies</label><input id="sf" type="number" value="3" min="0"></div>
+      <div><label>Strikeouts</label><input id="k" type="number" value="80" min="0"></div>
+    </div>
+    <div class="out" style="margin-top:12px">
+      <div class="metric"><div class="v" id="o-slash">-</div><div class="k">Slash line (AVG/OBP/SLG)</div></div>
+      <div class="metric"><div class="v" id="o-ops">-</div><div class="k">OPS</div></div>
+      <div class="metric"><div class="v" id="o-iso">-</div><div class="k">Isolated power</div></div>
+      <div class="metric"><div class="v" id="o-babip">-</div><div class="k">BABIP</div></div>
+      <div class="metric"><div class="v" id="o-bband">-</div><div class="k">Honest band</div></div>
+    </div>
+    <p class="note" id="o-bnote"></p>
+  </div>
+  <div class="card">
+    <h2>2. The pitching line</h2>
+    <div class="grid">
+      <div><label>Innings (whole)</label><input id="ip" type="number" value="200" min="0"></div>
+      <div><label>Extra outs (0-2)</label><input id="outs" type="number" value="1" min="0" max="2"></div>
+      <div><label>Earned runs</label><input id="er" type="number" value="65" min="0"></div>
+      <div><label>Hits allowed</label><input id="ph" type="number" value="180" min="0"></div>
+      <div><label>Walks allowed</label><input id="pbb" type="number" value="50" min="0"></div>
+      <div><label>Strikeouts</label><input id="pk" type="number" value="230" min="0"></div>
+    </div>
+    <div class="out" style="margin-top:12px">
+      <div class="metric"><div class="v" id="o-era">-</div><div class="k">ERA</div></div>
+      <div class="metric"><div class="v" id="o-whip">-</div><div class="k">WHIP</div></div>
+      <div class="metric"><div class="v" id="o-k9">-</div><div class="k">K/9 and BB/9</div></div>
+      <div class="metric"><div class="v" id="o-pband">-</div><div class="k">Honest band</div></div>
+    </div>
+    <p class="note">Baseball writes 6.1 for six innings and one out - a third of an inning, not a tenth. Enter whole innings and extra outs separately and the math stays honest.</p>
+  </div>
+  <p><a class="back" href="index.html">&larr; Back to BatMath</a></p>
+</main>
+<script src="engine.js"></script>
+<script>
+(function () {
+  var ids = ['ab','h','d2','d3','hr','bb','hbp','sf','k','ip','outs','er','ph','pbb','pk'];
+  function num(id) { var v = parseFloat(document.getElementById(id).value); return isFinite(v) ? v : 0; }
+  function compute() {
+    if (typeof BatMath === 'undefined') return;
+    var ab = num('ab'), h = num('h'), d2 = num('d2'), d3 = num('d3'), hr = num('hr'),
+        bb = num('bb'), hbp = num('hbp'), sf = num('sf'), k = num('k');
+    var tb = BatMath.totalBases(h, d2, d3, hr);
+    var avg = BatMath.avg(h, ab);
+    var obp = BatMath.obp(h, bb, hbp, ab, sf);
+    var slg = tb === null ? null : BatMath.slg(tb, ab);
+    var ops = BatMath.ops(obp, slg);
+    document.getElementById('o-slash').textContent = tb === null ? 'impossible mix'
+      : BatMath.fmtAvg(avg) + ' / ' + BatMath.fmtAvg(obp) + ' / ' + BatMath.fmtAvg(slg);
+    document.getElementById('o-ops').textContent = BatMath.fmtAvg(ops);
+    document.getElementById('o-iso').textContent = BatMath.fmtAvg(BatMath.iso(slg, avg));
+    document.getElementById('o-babip').textContent = BatMath.fmtAvg(BatMath.babip(h, hr, ab, k, sf));
+    document.getElementById('o-bband').textContent = ops ? BatMath.opsBand(ops) : '-';
+    var babip = BatMath.babip(h, hr, ab, k, sf);
+    document.getElementById('o-bnote').textContent = tb === null
+      ? 'Doubles + triples + homers exceed total hits - check the counting stats.'
+      : (babip !== null && babip < 0.270
+        ? 'BABIP well under .300: hard outs, bad luck, or both. The average may be underselling this bat.'
+        : (babip !== null && babip > 0.330
+          ? 'BABIP well over .300: some of these hits are finding grass. Expect gravity next season.'
+          : 'BABIP near .300: the hits are earned at a normal rate.'));
+
+    var ipd = BatMath.ipDecimal(num('ip'), num('outs'));
+    var era = BatMath.era(num('er'), ipd);
+    document.getElementById('o-era').textContent = BatMath.fmtEra(era);
+    document.getElementById('o-whip').textContent = BatMath.whip(num('pbb'), num('ph'), ipd) === null ? '-' : BatMath.whip(num('pbb'), num('ph'), ipd).toFixed(3);
+    document.getElementById('o-k9').textContent = ipd > 0
+      ? BatMath.per9(num('pk'), ipd).toFixed(1) + ' / ' + BatMath.per9(num('pbb'), ipd).toFixed(1)
+      : '-';
+    document.getElementById('o-pband').textContent = era !== null ? BatMath.eraBand(era) : '-';
+  }
+  var presets = {
+    mvp:     {ab:500, h:150, d2:30, d3:5, hr:25, bb:60, hbp:5, sf:3, k:80,  ip:200, outs:1, er:65, ph:180, pbb:50, pk:230},
+    average: {ab:520, h:130, d2:24, d3:2, hr:14, bb:45, hbp:3, sf:4, k:110, ip:170, outs:0, er:78, ph:170, pbb:58, pk:150},
+    ace:     {ab:550, h:160, d2:35, d3:4, hr:38, bb:75, hbp:6, sf:5, k:95,  ip:210, outs:2, er:52, ph:150, pbb:42, pk:280},
+    rough:   {ab:480, h:104, d2:16, d3:1, hr:8,  bb:28, hbp:2, sf:2, k:140, ip:140, outs:0, er:82, ph:165, pbb:62, pk:110}
+  };
+  Array.prototype.forEach.call(document.querySelectorAll('.presets button'), function (b) {
+    b.addEventListener('click', function () {
+      var p = presets[b.getAttribute('data-p')];
+      if (!p) return;
+      Object.keys(p).forEach(function (key) { document.getElementById(key).value = p[key]; });
+      compute();
+    });
+  });
+  ids.forEach(function (id) {
+    document.getElementById(id).addEventListener('input', compute);
+    document.getElementById(id).addEventListener('change', compute);
+  });
+  compute();
+})();
+</script>
+</body>
+</html>
