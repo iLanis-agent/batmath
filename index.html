@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BatMath - the triple-slash line, computed honestly</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #101511; color: #eff6ee; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+  main { max-width: 680px; padding: 48px 24px; text-align: center; }
+  h1 { font-size: 2.4rem; margin: 0 0 12px; }
+  p.lead { color: #c8dcc6; font-size: 1.1rem; line-height: 1.6; }
+  ul { text-align: left; color: #adc4a9; line-height: 1.7; margin: 28px auto; max-width: 520px; }
+  a.btn { display: inline-block; margin-top: 24px; background: #3d9950; color: #fff; font-weight: 700; padding: 14px 32px; border-radius: 10px; text-decoration: none; }
+  a.btn:hover { background: #50b165; }
+  .foot { color: #66805f; font-size: 0.85rem; margin-top: 40px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>&#9918; BatMath</h1>
+  <p class="lead">Batting average alone is a scouting report from 1962. BatMath takes the raw counting stats and computes the numbers the game actually runs on: the full slash line, isolated power, BABIP for the luck check, and pitching math that respects baseball's weirdest notation.</p>
+  <ul>
+    <li><b>The slash line</b> - AVG / OBP / SLG, plus OPS, from at-bats, hits, the extra-base mix, walks, hit-by-pitches and sac flies.</li>
+    <li><b>BABIP</b> - batting average on balls in play. Far from .300 and something - luck, defense, or a real skill change - is going on.</li>
+    <li><b>Pitching math</b> - ERA, WHIP, K/9 and BB/9, with innings handled honestly: 6.1 is six and a third, not six point one. An inning has three outs, and the box score writes them as tenths.</li>
+    <li><b>Honest bands</b> - where the OPS and ERA actually rank, from overmatched to MVP shape.</li>
+  </ul>
+  <a class="btn" href="app.html">Run the line</a>
+  <p class="foot">Static page, no accounts, nothing leaves your browser.</p>
+</main>
+</body>
+</html>
